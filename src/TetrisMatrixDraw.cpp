@@ -241,6 +241,8 @@ void TetrisMatrixDraw::setNumbers(int value)
       if (number != this->numstates[pos].num_to_draw)
       {
         setNumState(pos, number, currentXShift);
+      } else {
+        this->numstates[pos].x_shift = currentXShift;
       }
     }
   } else {
