@@ -19,6 +19,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
 #include "TetrisMatrixDraw.h"
 #include "TetrisNumbers.h"
+#include "TetrisLetters.h"
 
 TetrisMatrixDraw::TetrisMatrixDraw(Adafruit_GFX &display)	{
     this->display = &display;
@@ -201,6 +202,35 @@ void TetrisMatrixDraw::drawShape(int blocktype, uint16_t color, int x_pos, int y
       this->display->drawPixel(x_pos + 1, y_pos - 2, color);
     }
   }
+
+   // Corner-Shape 
+   if (blocktype == 7)
+   {
+     if (num_rot == 0)
+     {
+       this->display->drawPixel(x_pos, y_pos, color);
+       this->display->drawPixel(x_pos + 1, y_pos, color);
+       this->display->drawPixel(x_pos, y_pos - 1, color);
+     }
+     if (num_rot == 1)
+     {
+       this->display->drawPixel(x_pos, y_pos, color);
+       this->display->drawPixel(x_pos, y_pos - 1, color);
+       this->display->drawPixel(x_pos + 1, y_pos - 1, color);
+     }
+     if (num_rot == 2)
+     {
+       this->display->drawPixel(x_pos + 1 , y_pos, color);
+       this->display->drawPixel(x_pos + 1 , y_pos - 1, color);
+       this->display->drawPixel(x_pos, y_pos - 1, color);
+     }
+     if (num_rot == 3)
+     {
+       this->display->drawPixel(x_pos, y_pos, color);
+       this->display->drawPixel(x_pos + 1, y_pos , color);
+       this->display->drawPixel(x_pos + 1, y_pos - 1, color);
+     }
+   }
 }
 
 void TetrisMatrixDraw::setNumState(int index, int value, int x_shift)
@@ -248,6 +278,98 @@ void TetrisMatrixDraw::setNumbers(int value)
   } else {
     Serial.println("Number too long");
   }
+}
+
+void TetrisMatrixDraw::setText(String txt)
+{
+    this->sizeOfValue = txt.length();
+    int currentXShift = 0;
+    for (uint8_t pos = 0; pos < this->sizeOfValue; pos++)
+    {
+      currentXShift = TETRIS_DISTANCE_BETWEEN_DIGITS * pos;
+      char letter = txt.charAt(pos);
+      if ((int)letter != this->numstates[pos].num_to_draw)
+      {
+        setNumState(pos, (int)letter, currentXShift);
+      } else {
+        this->numstates[pos].x_shift = currentXShift;
+      }
+    }
+}
+
+bool TetrisMatrixDraw::drawText(int x, int y)
+{
+  // For each number position
+  bool finishedAnimating = true;
+  // For each number position
+  for (int numpos = 0; numpos < this->sizeOfValue; numpos++)
+  {
+
+    // Draw falling shape
+    //if (numstates[numpos].blockindex < blocksPerNumber[numstates[numpos].num_to_draw])
+    if (numstates[numpos].blockindex < blocksPerChar[numstates[numpos].num_to_draw-33])
+    {
+      finishedAnimating = false;
+      fall_instr_let current_fall = getFallinstrByAscii(numstates[numpos].num_to_draw, numstates[numpos].blockindex);
+
+      // Handle variations of rotations
+      uint8_t rotations = current_fall.num_rot;
+      if (rotations == 1)
+      {
+        if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 2))
+        {
+          rotations = 0;
+        }
+      }
+      if (rotations == 2)
+      {
+        if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 3))
+        {
+          rotations = 0;
+        }
+        if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 3 * 2))
+        {
+          rotations = 1;
+        }
+      }
+      if (rotations == 3)
+      {
+        if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 4))
+        {
+          rotations = 0;
+        }
+        if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 4 * 2))
+        {
+          rotations = 1;
+        }
+        if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 4 * 3))
+        {
+          rotations = 2;
+        }
+      }
+
+      drawShape(current_fall.blocktype, this->tetrisColors[current_fall.color], x + current_fall.x_pos + numstates[numpos].x_shift, y + numstates[numpos].fallindex - 1, rotations);
+      numstates[numpos].fallindex++;
+
+      if (numstates[numpos].fallindex > current_fall.y_stop)
+      {
+        numstates[numpos].fallindex = 0;
+        numstates[numpos].blockindex++;
+      }
+    }
+
+    // Draw already dropped shapes
+    if (numstates[numpos].blockindex > 0)
+    {
+      for (int i = 0; i < numstates[numpos].blockindex; i++)
+      {
+        fall_instr_let fallen_block = getFallinstrByAscii(numstates[numpos].num_to_draw, i);
+        drawShape(fallen_block.blocktype, this->tetrisColors[fallen_block.color], x + fallen_block.x_pos + numstates[numpos].x_shift, y + fallen_block.y_stop - 1, fallen_block.num_rot);
+      }
+    }
+  }
+
+  return finishedAnimating;
 }
 
 bool TetrisMatrixDraw::drawNumbers(int x, int y, bool displayColon)
