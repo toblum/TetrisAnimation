@@ -51,7 +51,7 @@ uint16_t myCYAN = display.color565(0, 255, 255);
 uint16_t myMAGENTA = display.color565(255, 0, 255);
 uint16_t myBLACK = display.color565(0, 0, 0);
 
-uint16 myCOLORS[8] = {myRED, myGREEN, myBLUE, myWHITE, myYELLOW, myCYAN, myMAGENTA, myBLACK};
+uint16_t myCOLORS[8] = {myRED, myGREEN, myBLUE, myWHITE, myYELLOW, myCYAN, myMAGENTA, myBLACK};
 
 TetrisMatrixDraw tetris(display);
 
@@ -105,7 +105,6 @@ void setup() {
   delay(2000);
   timer_ticker.attach(0.05, number_updater);
 
-  // Showing how the colon can be flashed from the sketch
   delay(15000);
   tetris.setText("*+,-./");
 

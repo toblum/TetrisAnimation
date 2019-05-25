@@ -58,7 +58,7 @@ void display_updater()
 void number_updater()
 {
   display.clearDisplay();
-  tetris.drawNumbers(10,10, showColon);
+  tetris.drawNumbers(10,26, showColon);
 }
 
 void drawIntro(int x = 0, int y = 0)

@@ -18,8 +18,9 @@
 
 #include <PxMatrix.h>
 // The library for controlling the LED Matrix
-// Needs to be manually downloaded and installed
+// Can be installed from the library manager
 // https://github.com/2dom/PxMatrix
+// This library has a dependancy on the Adafruit GFX library
 
 #include <TetrisMatrixDraw.h>
 
@@ -50,7 +51,7 @@ uint16_t myCYAN = display.color565(0, 255, 255);
 uint16_t myMAGENTA = display.color565(255, 0, 255);
 uint16_t myBLACK = display.color565(0, 0, 0);
 
-uint16 myCOLORS[8] = {myRED, myGREEN, myBLUE, myWHITE, myYELLOW, myCYAN, myMAGENTA, myBLACK};
+uint16_t myCOLORS[8] = {myRED, myGREEN, myBLUE, myWHITE, myYELLOW, myCYAN, myMAGENTA, myBLACK};
 
 TetrisMatrixDraw tetris(display);
 
@@ -65,7 +66,8 @@ void display_updater()
 void number_updater()
 {
   display.clearDisplay();
-  tetris.drawNumbers(0,0);
+
+  tetris.drawNumbers(0,16);
 }
 
 void drawIntro(int x = 0, int y = 0)
@@ -98,6 +100,15 @@ void setup() {
 
   delay(2000);
   timer_ticker.attach(0.1, number_updater);
+
+  delay(10000);
+
+  // Scale will make each tetris block bigger
+  // It needs to be called before you do tetris.setNumbers
+  // It will persist for future setNumbers
+  tetris.scale = 2; // Make blocks double the size
+
+  tetris.setNumbers(1234);
 }
 
 

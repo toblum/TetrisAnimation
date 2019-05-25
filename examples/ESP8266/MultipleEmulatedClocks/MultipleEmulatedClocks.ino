@@ -51,7 +51,7 @@ uint16_t myCYAN = display.color565(0, 255, 255);
 uint16_t myMAGENTA = display.color565(255, 0, 255);
 uint16_t myBLACK = display.color565(0, 0, 0);
 
-uint16 myCOLORS[8] = {myRED, myGREEN, myBLUE, myWHITE, myYELLOW, myCYAN, myMAGENTA, myBLACK};
+uint16_t myCOLORS[8] = {myRED, myGREEN, myBLUE, myWHITE, myYELLOW, myCYAN, myMAGENTA, myBLACK};
 
 TetrisMatrixDraw tetris(display);
 TetrisMatrixDraw tetrisTwo(display);
@@ -78,10 +78,10 @@ void number_updater()
 {
   if(!finishedAnimating) {
     display.clearDisplay();
-    bool first = tetris.drawNumbers(0,0, showColon);
-    bool second = tetrisTwo.drawNumbers(0,16, showColon);
-    bool third = tetrisThree.drawNumbers(32,0, showColon);
-    bool fourth = tetrisFour.drawNumbers(32,16, showColon);
+    bool first = tetris.drawNumbers(0,16, showColon);
+    bool second = tetrisTwo.drawNumbers(0,32, showColon);
+    bool third = tetrisThree.drawNumbers(32,16, showColon);
+    bool fourth = tetrisFour.drawNumbers(32,32, showColon);
     finishedAnimating = first && second && third && fourth;
   }
 }

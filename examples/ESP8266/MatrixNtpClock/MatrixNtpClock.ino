@@ -78,9 +78,9 @@ void number_updater()
   display.clearDisplay();
   // drawNumbers(x,y, showColon)
   // x = left Pixel for where 
-  // y = where blocks start falling from (will land y + 16)
+  // y = where blocks land
   // showColon = (optional) wether to show the colon or not, defaults to false
-  tetris.drawNumbers(16,8, showColon);
+  tetris.drawNumbers(16,24, showColon);
 }
 
 // This isn't tetris blocks (maybe shouldn't be in the library!)

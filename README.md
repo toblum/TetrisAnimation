@@ -1,9 +1,10 @@
 # TetrisAnimation
-Library to draw numbers using a tetris style
+
+An Arduino library for drawing letters and numbers using a falling block style animation.
 
 [![alt text](https://j.gifs.com/6RvBDl.gif "Tetris clock animation")](https://youtu.be/BGmjvfqf_0U)
 
-Tested using ESP8266 on RGB Led matrixes (using the [PxMatrix library](https://github.com/2dom/PxMatrix/)), but potentially works on any display that uses Adafruit GFX library
+Tested using ESP8266 & ESP32 on RGB Led matrixes (using the [PxMatrix library](https://github.com/2dom/PxMatrix/)), but potentially works on any display that uses Adafruit GFX library
 
 ## Basic Usage
 
@@ -25,21 +26,46 @@ tetris.setTime("12:34");
 tetris.setNumbers(1234);
 
 // Usage: setText(string)
-// string = regular text string, most ascii chars supported.
-tetris.setNumbers("HOWDY");
+// string = regular text string, Use uppercase letters only.
+// For full list of characters supported, check the AlphaTest examples.
+tetris.setText("HOWDY!");
 
 
 // Draw the value
 
+// These will normally be called in a timer or ticker (see any example)
+// How often they are called will increase/decrease the speed of which
+// the blocks drop.
+
 // Usage: drawNumbers(x, y, showColon) (for use with setTime or setNumber)
 // x = most left Pixel of the text 
-// y = where blocks start falling from (will land y + 16)
+// y = The bottom of the number when it lands, they will start falling from y + (16 * scale)
 // showColon = (optional) show the colon or not, defaults to false (only applicaple when using setTime)
+//
+// Returns a boolean to indicate if its finished animating
+// (will return false if there is still falling blocks)
 tetris.drawNumbers(16,8, true);
 
 // Usage: drawText(x, y) (for use with setText)
 // x = most left Pixel of the text 
-// y = where blocks start falling from (will land y + 16)
+// y = The bottom of the text when it lands, they will start falling from y + (16 * scale)
+//
+// Returns a boolean to indicate if its finished animating
+// (will return false if there is still falling blocks)
 tetris.drawText(16,8);
 
+
+// Scale
+
+// Usage: scale = 2
+// Will scale up the size of the characters
+// Can be used with either numbers or text 
+
+tetris.scale = 2; // must be called before setText, setTime or setNumbers
+tetris.setText("BIG"); // This will be twice the size as normal
+delay(5000);
+tetris.setText("STILL BIG"); // scale persists
+delay(5000);
+tetris.scale = 1; // can be reset to normal size if required
+tetris.setText("SMALL");
 ```
