@@ -47,9 +47,9 @@ class TetrisMatrixDraw
         void drawChar(String letter, uint8_t x, uint8_t y, uint16_t color);
         void drawShape(int blocktype, uint16_t color, int x_pos, int y_pos, int num_rot);
         void drawLargerShape(int scale, int blocktype, uint16_t color, int x_pos, int y_pos, int num_rot);
-        void setTime(String time);
-        void setNumbers(int value);
-        void setText(String txt);
+        void setTime(String time, bool forceRefresh = false);
+        void setNumbers(int value, bool forceRefresh = false);
+        void setText(String txt, bool forceRefresh = false);
         void setNumState(int index, int value, int x_shift);
         int calculateWidth();
         bool _debug = false;
