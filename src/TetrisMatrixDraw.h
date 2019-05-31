@@ -51,6 +51,7 @@ class TetrisMatrixDraw
         void setNumbers(int value, bool forceRefresh = false);
         void setText(String txt, bool forceRefresh = false);
         void setNumState(int index, int value, int x_shift);
+        void drawColon(int x, int y, uint16_t colonColour);
         int calculateWidth();
         bool _debug = false;
         int scale = 1;

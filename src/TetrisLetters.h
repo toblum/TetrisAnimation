@@ -848,8 +848,8 @@ fall_instr_let a90[9] = {
 };
 
 // holds the number of blocks in each character
-                        // ! " # $ % & ' ( ) * + , - . / 0  1 2 3 4 5  6  7 8 9 : ; < = > ? @ A B C D E F G H I J K L M N O P Q R S T U  V W X Y Z
-int blocksPerChar[64] = {5,4,9,8,7,8,2,4,4,6,5,2,3,1,5,10,8,9,9,8,10,10,6,8,7,2,3,5,4,5,6,8,9,9,8,9,9,7,8,9,8,7,9,6,9,9,9,9,9,9,9,6,9,10,8,7,7,9};
+                      // ! " # $ % & ' ( ) * + , - . / 0  1 2 3 4 5  6  7 8 9 : ; < = > ? @ A B C D E F G H I J K L M N O P Q R S T U  V W X Y Z
+int blocksPerChar[64] = {5,4,9,8,7,8,2,4,4,6,5,2,3,1,5,10,8,9,9,8,10,10,6,8,7,2,3,5,4,5,6,8,9,9,8,9,9,7,8,9,8,7,9,6,9,9,9,8,9,9,9,6,9,10,8,7,7,9};
 
 fall_instr_let getFallinstrByAscii(int num, int blockindex)
 {

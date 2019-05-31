@@ -6,6 +6,8 @@ An Arduino library for drawing letters and numbers using a falling block style a
 
 Tested using ESP8266 & ESP32 on RGB Led matrixes (using the [PxMatrix library](https://github.com/2dom/PxMatrix/)), but potentially works on any display that uses Adafruit GFX library
 
+PLEASE NOTE: There are some issues with ESP8266 sketches that make use of WiFi as well, there is an issue open for this: https://github.com/toblum/TetrisAnimation/issues/3
+
 ## Installation & Setup
 
 Search for "Tetris Animation" on the Arduino library manager

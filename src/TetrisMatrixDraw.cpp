@@ -518,95 +518,99 @@ bool TetrisMatrixDraw::drawText(int x, int yFinish)
   for (int numpos = 0; numpos < this->sizeOfValue; numpos++)
   {
 
-    // Draw falling shape
-    //if (numstates[numpos].blockindex < blocksPerNumber[numstates[numpos].num_to_draw])
-    if (numstates[numpos].blockindex < blocksPerChar[numstates[numpos].num_to_draw-33])
+    if(numstates[numpos].num_to_draw >= 33)
     {
-      finishedAnimating = false;
-      fall_instr_let current_fall = getFallinstrByAscii(numstates[numpos].num_to_draw, numstates[numpos].blockindex);
+      // Draw falling shape
+      //if (numstates[numpos].blockindex < blocksPerNumber[numstates[numpos].num_to_draw])
+      if (numstates[numpos].blockindex < blocksPerChar[numstates[numpos].num_to_draw-33])
+      {
+        finishedAnimating = false;
+        fall_instr_let current_fall = getFallinstrByAscii(numstates[numpos].num_to_draw, numstates[numpos].blockindex);
 
-      // Handle variations of rotations
-      uint8_t rotations = current_fall.num_rot;
-      if (rotations == 1)
-      {
-        if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 2))
+        // Handle variations of rotations
+        uint8_t rotations = current_fall.num_rot;
+        if (rotations == 1)
         {
-          rotations = 0;
+          if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 2))
+          {
+            rotations = 0;
+          }
         }
-      }
-      if (rotations == 2)
-      {
-        if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 3))
+        if (rotations == 2)
         {
-          rotations = 0;
+          if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 3))
+          {
+            rotations = 0;
+          }
+          if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 3 * 2))
+          {
+            rotations = 1;
+          }
         }
-        if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 3 * 2))
+        if (rotations == 3)
         {
-          rotations = 1;
+          if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 4))
+          {
+            rotations = 0;
+          }
+          if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 4 * 2))
+          {
+            rotations = 1;
+          }
+          if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 4 * 3))
+          {
+            rotations = 2;
+          }
         }
-      }
-      if (rotations == 3)
-      {
-        if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 4))
-        {
-          rotations = 0;
-        }
-        if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 4 * 2))
-        {
-          rotations = 1;
-        }
-        if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 4 * 3))
-        {
-          rotations = 2;
-        }
-      }
-      if(this->scale <= 1){
-        drawShape(current_fall.blocktype, 
-                  this->tetrisColors[current_fall.color],
-                  x + current_fall.x_pos + numstates[numpos].x_shift, 
-                  y + numstates[numpos].fallindex - scaledYOffset, 
-                  rotations);
-      } else {
-        drawLargerShape(this->scale, 
-                        current_fall.blocktype, 
-                        this->tetrisColors[current_fall.color], 
-                        x + (current_fall.x_pos * this->scale) + numstates[numpos].x_shift, 
-                        y + (numstates[numpos].fallindex * scaledYOffset) - scaledYOffset, 
-                        rotations);
-      }
-      //drawShape(current_fall.blocktype, this->tetrisColors[current_fall.color], x + current_fall.x_pos + numstates[numpos].x_shift, y + numstates[numpos].fallindex - 1, rotations);
-      numstates[numpos].fallindex++;
-
-      if (numstates[numpos].fallindex > current_fall.y_stop)
-      {
-        numstates[numpos].fallindex = 0;
-        numstates[numpos].blockindex++;
-      }
-    }
-
-    // Draw already dropped shapes
-    if (numstates[numpos].blockindex > 0)
-    {
-      for (int i = 0; i < numstates[numpos].blockindex; i++)
-      {
-        fall_instr_let fallen_block = getFallinstrByAscii(numstates[numpos].num_to_draw, i);
         if(this->scale <= 1){
-          drawShape(fallen_block.blocktype, 
-                    this->tetrisColors[fallen_block.color], 
-                    x + fallen_block.x_pos + numstates[numpos].x_shift, 
-                    y + fallen_block.y_stop - 1, 
-                    fallen_block.num_rot);
+          drawShape(current_fall.blocktype, 
+                    this->tetrisColors[current_fall.color],
+                    x + current_fall.x_pos + numstates[numpos].x_shift, 
+                    y + numstates[numpos].fallindex - scaledYOffset, 
+                    rotations);
         } else {
           drawLargerShape(this->scale, 
-                          fallen_block.blocktype, 
-                          this->tetrisColors[fallen_block.color], 
-                          x + (fallen_block.x_pos * this->scale) + numstates[numpos].x_shift, 
-                          y + (fallen_block.y_stop * scaledYOffset) - scaledYOffset, 
-                          fallen_block.num_rot);
+                          current_fall.blocktype, 
+                          this->tetrisColors[current_fall.color], 
+                          x + (current_fall.x_pos * this->scale) + numstates[numpos].x_shift, 
+                          y + (numstates[numpos].fallindex * scaledYOffset) - scaledYOffset, 
+                          rotations);
         }
-        //drawShape(fallen_block.blocktype, this->tetrisColors[fallen_block.color], x + fallen_block.x_pos + numstates[numpos].x_shift, y + fallen_block.y_stop - 1, fallen_block.num_rot);
+        //drawShape(current_fall.blocktype, this->tetrisColors[current_fall.color], x + current_fall.x_pos + numstates[numpos].x_shift, y + numstates[numpos].fallindex - 1, rotations);
+        numstates[numpos].fallindex++;
+
+        if (numstates[numpos].fallindex > current_fall.y_stop)
+        {
+          numstates[numpos].fallindex = 0;
+          numstates[numpos].blockindex++;
+        }
+      }
+
+      // Draw already dropped shapes
+      if (numstates[numpos].blockindex > 0)
+      {
+        for (int i = 0; i < numstates[numpos].blockindex; i++)
+        {
+          fall_instr_let fallen_block = getFallinstrByAscii(numstates[numpos].num_to_draw, i);
+          if(this->scale <= 1){
+            drawShape(fallen_block.blocktype, 
+                      this->tetrisColors[fallen_block.color], 
+                      x + fallen_block.x_pos + numstates[numpos].x_shift, 
+                      y + fallen_block.y_stop - 1, 
+                      fallen_block.num_rot);
+          } else {
+            drawLargerShape(this->scale, 
+                            fallen_block.blocktype, 
+                            this->tetrisColors[fallen_block.color], 
+                            x + (fallen_block.x_pos * this->scale) + numstates[numpos].x_shift, 
+                            y + (fallen_block.y_stop * scaledYOffset) - scaledYOffset, 
+                            fallen_block.num_rot);
+          }
+          //drawShape(fallen_block.blocktype, this->tetrisColors[fallen_block.color], x + fallen_block.x_pos + numstates[numpos].x_shift, y + fallen_block.y_stop - 1, fallen_block.num_rot);
+        }
       }
     }
+    
   }
 
   return finishedAnimating;
@@ -714,17 +718,19 @@ bool TetrisMatrixDraw::drawNumbers(int x, int yFinish, bool displayColon)
     }
   }
 
-  // Hour / minutes divider (blinking)
-  // if (seconds_odd)
   if (displayColon)
   {
-    int colonSize = 2 * this->scale;
-    int xColonPos = x + (TETRIS_DISTANCE_BETWEEN_DIGITS * 2 * this->scale);  
-    display->fillRect(xColonPos, y + (12 * this->scale), colonSize, colonSize, this->tetrisWHITE);
-    display->fillRect(xColonPos, y + (8 * this->scale), colonSize, colonSize, this->tetrisWHITE);
+    this->drawColon(x, y, this->tetrisWHITE);
   }
 
   return finishedAnimating;
+}
+
+void TetrisMatrixDraw::drawColon(int x, int y, uint16_t colonColour){
+  int colonSize = 2 * this->scale;
+  int xColonPos = x + (TETRIS_DISTANCE_BETWEEN_DIGITS * 2 * this->scale);  
+  display->fillRect(xColonPos, y + (12 * this->scale), colonSize, colonSize, colonColour);
+  display->fillRect(xColonPos, y + (8 * this->scale), colonSize, colonSize, colonColour);
 }
 
 void TetrisMatrixDraw::intialiseColors(){
