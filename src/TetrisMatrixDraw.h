@@ -55,6 +55,9 @@ class TetrisMatrixDraw
         int calculateWidth();
         bool _debug = false;
         int scale = 1;
+        bool drawOutline = false;
+        uint16_t outLineColour = 0x0000;
+
         uint16_t tetrisColors[9];
         uint16_t tetrisRED;
         uint16_t tetrisGREEN;
@@ -69,6 +72,7 @@ class TetrisMatrixDraw
     private:
         void intialiseColors();
         void resetNumStates();
+        void drawLargerBlock(int x_pos, int y_pos, int scale, uint16_t color);
         numstate numstates[TETRIS_MAX_NUMBERS];
         int sizeOfValue;
 };

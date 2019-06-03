@@ -1,0 +1,169 @@
+/*******************************************************************
+    Example showing writing text using the TetrisAnimation
+    library for the ESP32.
+ *                                                                 *
+    Written by Brian Lough (witnessmenow on Github)
+
+ *******************************************************************/
+
+// ----------------------------
+// Standard Libraries - Already Installed if you have ESP32 set up
+// ----------------------------
+
+#include <Ticker.h>
+#include <SPI.h>
+
+// ----------------------------
+// Additional Libraries - each one of these will need to be installed.
+// ----------------------------
+
+#include <Adafruit_GFX.h>
+// Adafruit GFX library is a dependancy for the Adafruit_PCD8544 Library
+// Can be installed from the library manager
+// https://github.com/adafruit/Adafruit-GFX-Library
+
+#include <Adafruit_PCD8544.h>
+// NOTE: This is not the one from the library manager!!!
+// Used for controlling the Nokia Screen
+// Install from Github
+// https://github.com/bbx10/Adafruit-PCD8544-Nokia-5110-LCD-library/tree/esp8266
+// Make sure its on the "esp8266" branch
+
+#include <TetrisMatrixDraw.h>
+// This library!
+// https://github.com/toblum/TetrisAnimation
+
+
+Ticker animationTicker;
+
+// ESP8266 Software SPI (slower updates, more flexible pin options):
+// pin 14 - Serial clock out (SCLK)
+// pin 13 - Serial data out (DIN)
+// pin 12 - Data/Command select (D/C)
+// pin 5 - LCD chip select (CS)
+// pin 4 - LCD reset (RST)
+//Adafruit_PCD8544 display = Adafruit_PCD8544(14, 13, 12, 5, 4);
+
+// If using an ESP8266, use this option. Comment out the other options.
+// ESP8266 Hardware SPI (faster, but must use certain hardware pins):
+// SCK is LCD serial clock (SCLK) - this is pin 14 on Huzzah ESP8266
+// MOSI is LCD DIN - this is pin 13 on an Huzzah ESP8266
+// pin 12 - Data/Command select (D/C) on an Huzzah ESP8266
+// pin 5 - LCD chip select (CS)
+// pin 4 - LCD reset (RST)
+Adafruit_PCD8544 display = Adafruit_PCD8544(12, 5, 4);
+
+// On my D1 Mini I have the following wired up:
+// Screen to D1 Mini
+// GND -> GND
+// LIGHT -> D3
+// VCC -> 3V
+// CLK -> D5
+// DIN -> D7
+// DC -> D6
+// CE -> D8
+// RST -> D0
+
+TetrisMatrixDraw tetris(display);
+
+bool showColon = true;
+
+boolean animate = true;
+
+void animationHandler()
+{
+  if (true) {
+    display.clearDisplay();
+    animate = !tetris.drawText(10, 30);
+    display.display();
+  }
+}
+
+
+void drawIntro(int x = 0, int y = 0)
+{
+  tetris.drawChar("T", x, y, tetris.tetrisBLACK);
+  tetris.drawChar("e", x + 5, y, tetris.tetrisMAGENTA);
+  tetris.drawChar("t", x + 11, y, tetris.tetrisYELLOW);
+  tetris.drawChar("r", x + 17, y, tetris.tetrisGREEN);
+  tetris.drawChar("i", x + 22, y, tetris.tetrisBLUE);
+  tetris.drawChar("s", x + 27, y, tetris.tetrisRED);
+
+  tetris.drawChar("L", x - 2, y + 9, tetris.tetrisRED);
+  tetris.drawChar("e", x + 5, y + 9, tetris.tetrisMAGENTA);
+  tetris.drawChar("t", x + 11, y + 9, tetris.tetrisYELLOW);
+  tetris.drawChar("t", x + 17, y + 9, tetris.tetrisGREEN);
+  tetris.drawChar("e", x + 23, y + 9, tetris.tetrisBLUE);
+  tetris.drawChar("r", x + 29, y + 9, tetris.tetrisRED);
+  tetris.drawChar("s", x + 37, y + 9, tetris.tetrisMAGENTA);
+}
+
+void setup() {
+  Serial.begin(115200);
+  display.begin();
+  // init done
+
+  // you can change the contrast around to adapt the display
+  // for the best viewing!
+  display.setContrast(60);
+
+  // My "LIGHT" pin is wired to D3
+  // This turns the backlight on
+  pinMode(D3, OUTPUT);
+  digitalWrite(D3, LOW);
+
+  yield();
+
+  drawIntro(10, 10);
+
+  delay(2000);
+
+  // Scale causing a crash for me, no idea why?
+  // tetris.scale = 2;
+
+  // Must use upercase characters
+  // See below for all supported chars
+
+  tetris.setText("HELLO!");
+
+  animationTicker.attach(0.05, animationHandler);
+
+
+  delay(10000);
+  animate = true;
+  tetris.setText("!#$%&'()");
+
+  delay(10000);
+  animate = true;
+  tetris.setText("*+,-./");
+
+  delay(10000);
+  animate = true;
+  tetris.setText("01234567");
+
+  delay(10000);
+  animate = true;
+  tetris.setText("89:;<=>?");
+
+  delay(10000);
+  animate = true;
+  tetris.setText("@ABCDEFG");
+
+  delay(10000);
+  animate = true;
+  tetris.setText("HIJKLMNO");
+
+  delay(10000);
+  animate = true;
+  tetris.setText("PQRSTUVW");
+
+  delay(10000);
+  animate = true;
+  tetris.setText("XYZ");
+
+
+}
+
+
+void loop() {
+}

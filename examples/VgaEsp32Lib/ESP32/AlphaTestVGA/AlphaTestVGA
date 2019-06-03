@@ -1,0 +1,152 @@
+/*******************************************************************
+    Example showing writing text using the TetrisAnimation
+    library on a VGA Screen using Bitluni's ESP32Lib for the ESP32.
+ *  
+    For Use with products from Bitluni's Tindie:
+    https://www.tindie.com/stores/bitluni/
+                                                                   *
+    Written by Brian Lough (witnessmenow on Github)
+
+ *******************************************************************/
+
+// ----------------------------
+// Standard Libraries - Already Installed if you have ESP32 set up
+// ----------------------------
+
+// ----------------------------
+// Additional Libraries - each one of these will need to be installed.
+// ----------------------------
+
+// The 3 includes below all belong to Bitluni ESP32Lib
+// They are being used to interface with the VGA
+// Can be installed from the library manager (Search for Bitluni)
+// https://github.com/adafruit/Adafruit-GFX-Library
+#include <ESP32Lib.h>
+#include <Ressources/Font6x8.h>
+#include <GfxWrapper.h>
+
+// Adafruit GFX library is a dependancy for the GfxWrapper
+// Can be installed from the library manager
+// https://github.com/adafruit/Adafruit-GFX-Library
+
+#include <TetrisMatrixDraw.h>
+// This library!
+// https://github.com/toblum/TetrisAnimation
+
+
+portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
+
+hw_timer_t * animationTimer = NULL;
+
+//VGA Device
+VGA6Bit vga;
+GfxWrapper<VGA6Bit> gfx(vga, 320, 200);
+
+TetrisMatrixDraw tetris(gfx);
+
+bool showColon = true;
+
+#define ANIMATION_TIME 50000    // Controls the speed in which the blocks update, 
+                                // increase this number to make it slower
+
+boolean animate = true;
+
+void animationHandler()
+{
+    portENTER_CRITICAL_ISR(&timerMux);
+    if(animate){
+      vga.clear(0);
+      animate = !tetris.drawText(25, 150);
+      vga.show();
+    }
+    portEXIT_CRITICAL_ISR(&timerMux);
+}
+
+
+void drawIntro(int x = 0, int y = 0)
+{
+  tetris.drawChar("T", x, y, tetris.tetrisCYAN);
+  tetris.drawChar("e", x + 5, y, tetris.tetrisMAGENTA);
+  tetris.drawChar("t", x + 11, y, tetris.tetrisYELLOW);
+  tetris.drawChar("r", x + 17, y, tetris.tetrisGREEN);
+  tetris.drawChar("i", x + 22, y, tetris.tetrisBLUE);
+  tetris.drawChar("s", x + 27, y, tetris.tetrisRED);
+
+  tetris.drawChar("L", x - 2, y + 9, tetris.tetrisRED);
+  tetris.drawChar("e", x + 5, y + 9, tetris.tetrisMAGENTA);
+  tetris.drawChar("t", x + 11, y + 9, tetris.tetrisYELLOW);
+  tetris.drawChar("t", x + 17, y + 9, tetris.tetrisGREEN);
+  tetris.drawChar("e", x + 23, y + 9, tetris.tetrisBLUE);
+  tetris.drawChar("r", x + 29, y + 9, tetris.tetrisRED);
+  tetris.drawChar("s", x + 37, y + 9, tetris.tetrisMAGENTA);
+}
+
+void setup() {
+  Serial.begin(115200);
+  vga.setFrameBufferCount(2);
+
+  // You may need to change which board you are using:
+  // https://github.com/bitluni/ESP32Lib#predefined-pin-configurations
+  vga.init(vga.MODE320x200, vga.VGAv01);
+
+  yield();
+
+  drawIntro(10, 10); //This is tiny at this resolution!!!
+  
+  delay(2000);
+
+  // Scaling each block that makes up to be 6 pixels wide
+  tetris.scale = 6; 
+
+  // Drawing an outline around each block to give them defintion
+  tetris.outLineColour = 0x0000; // any RGB 565 colour, defaults to black anyways
+  tetris.drawOutline = true;
+
+  // Must use upercase characters
+  // See below for all supported chars
+  tetris.setText("HELLO!");
+  
+  animationTimer = timerBegin(1, 80, true);
+  timerAttachInterrupt(animationTimer, &animationHandler, true);
+  timerAlarmWrite(animationTimer, ANIMATION_TIME, true);
+  timerAlarmEnable(animationTimer);
+
+
+  delay(10000);
+  animate = true;
+  tetris.setText("!#$%&'()");
+
+  delay(10000);
+  animate = true;
+  tetris.setText("*+,-./");
+
+  delay(10000);
+  animate = true;
+  tetris.setText("01234567");
+
+  delay(10000);
+  animate = true;
+  tetris.setText("89:;<=>?");
+
+  delay(10000);
+  animate = true;
+  tetris.setText("@ABCDEFG");
+
+  delay(10000);
+  animate = true;
+  tetris.setText("HIJKLMNO");
+
+  delay(10000);
+  animate = true;
+  tetris.setText("PQRSTUVW");
+
+  delay(10000);
+  animate = true;
+  tetris.setText("XYZ");
+
+
+}
+
+
+void loop() {
+}

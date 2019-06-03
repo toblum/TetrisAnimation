@@ -4,15 +4,18 @@ An Arduino library for drawing letters and numbers using a falling block style a
 
 [![alt text](https://j.gifs.com/6RvBDl.gif "Tetris clock animation")](https://youtu.be/BGmjvfqf_0U)
 
-Tested using ESP8266 & ESP32 on RGB Led matrixes (using the [PxMatrix library](https://github.com/2dom/PxMatrix/)), but potentially works on any display that uses Adafruit GFX library
+Deisgined orginally for RGB LED Matrixes, but it should in theory work with any display that uses the Adafruit GFX library.
+
+### Displays/Libraries tested ( Examples included)
+- RGB LED Matrix using the [PxMatrix library](https://github.com/2dom/PxMatrix/) - ESP8266 and ESP32
+- VGA Display using the [Bitluni ESP32Lib](https://github.com/bitluni/ESP32Lib) - ESP32
+- Nokia 5110 Screen using a modified [Adafruit PCD8544 library](https://github.com/bbx10/Adafruit-PCD8544-Nokia-5110-LCD-library/tree/esp8266) - ESP8266
 
 PLEASE NOTE: There are some issues with ESP8266 sketches that make use of WiFi as well, there is an issue open for this: https://github.com/toblum/TetrisAnimation/issues/3
 
 ## Installation & Setup
 
 Search for "Tetris Animation" on the Arduino library manager
-
-If you are using an RGB LED Matrix, Install the "PXMatrix" library from the library manager. This will also require the Adafruit GFX library.
 
 ## Basic Usage
 

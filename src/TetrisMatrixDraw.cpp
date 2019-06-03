@@ -234,6 +234,13 @@ void TetrisMatrixDraw::drawShape(int blocktype, uint16_t color, int x_pos, int y
    }
 }
 
+void TetrisMatrixDraw::drawLargerBlock(int x_pos, int y_pos, int scale, uint16_t color){
+  this->display->fillRect(x_pos, y_pos, scale, scale, color);
+  if(drawOutline){
+    this->display->drawRect(x_pos, y_pos, scale, scale, this->outLineColour);
+  }
+}
+
 void TetrisMatrixDraw::drawLargerShape(int scale, int blocktype, uint16_t color, int x_pos, int y_pos, int num_rot)
 {
   int offset1 = 1 * scale;
@@ -243,10 +250,10 @@ void TetrisMatrixDraw::drawLargerShape(int scale, int blocktype, uint16_t color,
   // Square
   if (blocktype == 0)
   {
-    this->display->fillRect(x_pos, y_pos, scale, scale, color);
-    this->display->fillRect(x_pos + offset1, y_pos, scale, scale, color);
-    this->display->fillRect(x_pos, y_pos - offset1, scale, scale, color);
-    this->display->fillRect(x_pos + offset1, y_pos - offset1, scale, scale, color);
+    this->drawLargerBlock(x_pos, y_pos, scale, color);
+    this->drawLargerBlock(x_pos + offset1, y_pos, scale, color);
+    this->drawLargerBlock(x_pos, y_pos - offset1, scale, color);
+    this->drawLargerBlock(x_pos + offset1, y_pos - offset1, scale, color);
   }
 
   // L-Shape
@@ -254,31 +261,34 @@ void TetrisMatrixDraw::drawLargerShape(int scale, int blocktype, uint16_t color,
   {
     if (num_rot == 0)
     {
-      this->display->fillRect(x_pos, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos, y_pos - offset2, scale, scale, color);
+      this->drawLargerBlock(x_pos, y_pos, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset2, scale, color);
+
     }
     if (num_rot == 1)
     {
-      this->display->fillRect(x_pos, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos + offset2, y_pos - offset1, scale, scale, color);
+      this->drawLargerBlock(x_pos, y_pos, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos + offset2, y_pos - offset1, scale, color);
+
     }
     if (num_rot == 2)
     {
-      this->display->fillRect(x_pos + offset1, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos - offset2, scale, scale, color);
-      this->display->fillRect(x_pos, y_pos - offset2, scale, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos - offset2, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset2, scale, color);
+
     }
     if (num_rot == 3)
     {
-      this->display->fillRect(x_pos, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos + offset2, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos + offset2, y_pos - offset1, scale, scale, color);
+      this->drawLargerBlock(x_pos, y_pos, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos, scale, color);
+      this->drawLargerBlock(x_pos + offset2, y_pos, scale, color);
+      this->drawLargerBlock(x_pos + offset2, y_pos - offset1, scale, color);
     }
   }
 
@@ -287,31 +297,31 @@ void TetrisMatrixDraw::drawLargerShape(int scale, int blocktype, uint16_t color,
   {
     if (num_rot == 0)
     {
-      this->display->fillRect(x_pos, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos - offset2, scale, scale, color);
+      this->drawLargerBlock(x_pos, y_pos, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos - offset2, scale, color);
     }
     if (num_rot == 1)
     {
-      this->display->fillRect(x_pos, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos + offset2, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos, y_pos - offset1, scale, scale, color);
+      this->drawLargerBlock(x_pos, y_pos, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos, scale, color);
+      this->drawLargerBlock(x_pos + offset2, y_pos, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset1, scale, color);
     }
     if (num_rot == 2)
     {
-      this->display->fillRect(x_pos, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos, y_pos - offset2, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos - offset2, scale, scale, color);
+      this->drawLargerBlock(x_pos, y_pos, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset2, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos - offset2, scale, color);
     }
     if (num_rot == 3)
     {
-      this->display->fillRect(x_pos, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos + offset2, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos + offset2, y_pos, scale, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos + offset2, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos + offset2, y_pos, scale, color);
     }
   }
 
@@ -320,17 +330,17 @@ void TetrisMatrixDraw::drawLargerShape(int scale, int blocktype, uint16_t color,
   {
     if (num_rot == 0 || num_rot == 2)
     { // Horizontal
-      this->display->fillRect(x_pos, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos + offset2, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos + offset3, y_pos, scale, scale, color);
+      this->drawLargerBlock(x_pos, y_pos, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos, scale, color);
+      this->drawLargerBlock(x_pos + offset2, y_pos, scale, color);
+      this->drawLargerBlock(x_pos + offset3, y_pos, scale, color);
     }
     if (num_rot == 1 || num_rot == 3)
     { // Vertical
-      this->display->fillRect(x_pos, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos, y_pos - offset2, scale, scale, color);
-      this->display->fillRect(x_pos, y_pos - offset3, scale, scale, color);
+      this->drawLargerBlock(x_pos, y_pos, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset2, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset3, scale, color);
     }
   }
 
@@ -339,17 +349,17 @@ void TetrisMatrixDraw::drawLargerShape(int scale, int blocktype, uint16_t color,
   {
     if (num_rot == 0 || num_rot == 2)
     {
-      this->display->fillRect(x_pos + offset1, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos, y_pos - offset2, scale, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset2, scale, color);
     }
     if (num_rot == 1 || num_rot == 3)
     {
-      this->display->fillRect(x_pos, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos + offset2, y_pos - offset1, scale, scale, color);
+      this->drawLargerBlock(x_pos, y_pos, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos + offset2, y_pos - offset1, scale, color);
     }
   }
 
@@ -358,17 +368,17 @@ void TetrisMatrixDraw::drawLargerShape(int scale, int blocktype, uint16_t color,
   {
     if (num_rot == 0 || num_rot == 2)
     {
-      this->display->fillRect(x_pos, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos - offset2, scale, scale, color);
+      this->drawLargerBlock(x_pos, y_pos, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos - offset2, scale, color);
     }
     if (num_rot == 1 || num_rot == 3)
     {
-      this->display->fillRect(x_pos + offset1, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos + offset2, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos - offset1, scale, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos, scale, color);
+      this->drawLargerBlock(x_pos + offset2, y_pos, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos - offset1, scale, color);
     }
   }
 
@@ -377,31 +387,31 @@ void TetrisMatrixDraw::drawLargerShape(int scale, int blocktype, uint16_t color,
   {
     if (num_rot == 0)
     {
-      this->display->fillRect(x_pos, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos + offset2, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos - offset1, scale, scale, color);
+      this->drawLargerBlock(x_pos, y_pos, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos, scale, color);
+      this->drawLargerBlock(x_pos + offset2, y_pos, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos - offset1, scale, color);
     }
     if (num_rot == 1)
     {
-      this->display->fillRect(x_pos, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos, y_pos - offset2, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos - offset1, scale, scale, color);
+      this->drawLargerBlock(x_pos, y_pos, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset2, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos - offset1, scale, color);
     }
     if (num_rot == 2)
     {
-      this->display->fillRect(x_pos + offset1, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos + offset2, y_pos - offset1, scale, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos + offset2, y_pos - offset1, scale, color);
     }
     if (num_rot == 3)
     {
-      this->display->fillRect(x_pos + offset1, y_pos, scale, scale, color);
-      this->display->fillRect(x_pos, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos - offset1, scale, scale, color);
-      this->display->fillRect(x_pos + offset1, y_pos - offset2, scale, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos, scale, color);
+      this->drawLargerBlock(x_pos, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos - offset1, scale, color);
+      this->drawLargerBlock(x_pos + offset1, y_pos - offset2, scale, color);
     }
   }
 
@@ -410,27 +420,27 @@ void TetrisMatrixDraw::drawLargerShape(int scale, int blocktype, uint16_t color,
    {
      if (num_rot == 0)
      {
-       this->display->fillRect(x_pos, y_pos, scale, scale, color);
-       this->display->fillRect(x_pos + offset1, y_pos, scale, scale, color);
-       this->display->fillRect(x_pos, y_pos - offset1, scale, scale, color);
+       this->drawLargerBlock(x_pos, y_pos, scale, color);
+       this->drawLargerBlock(x_pos + offset1, y_pos, scale, color);
+       this->drawLargerBlock(x_pos, y_pos - offset1, scale, color);
      }
      if (num_rot == 1)
      {
-       this->display->fillRect(x_pos, y_pos, scale, scale, color);
-       this->display->fillRect(x_pos, y_pos - offset1, scale, scale, color);
-       this->display->fillRect(x_pos + offset1, y_pos - offset1, scale, scale, color);
+       this->drawLargerBlock(x_pos, y_pos, scale, color);
+       this->drawLargerBlock(x_pos, y_pos - offset1, scale, color);
+       this->drawLargerBlock(x_pos + offset1, y_pos - offset1, scale, color);
      }
      if (num_rot == 2)
      {
-       this->display->fillRect(x_pos + offset1 , y_pos, scale, scale, color);
-       this->display->fillRect(x_pos + offset1 , y_pos - offset1, scale, scale, color);
-       this->display->fillRect(x_pos, y_pos - offset1, scale, scale, color);
+       this->drawLargerBlock(x_pos + offset1 , y_pos, scale, color);
+       this->drawLargerBlock(x_pos + offset1 , y_pos - offset1, scale, color);
+       this->drawLargerBlock(x_pos, y_pos - offset1, scale, color);
      }
      if (num_rot == 3)
      {
-       this->display->fillRect(x_pos, y_pos, scale, scale, color);
-       this->display->fillRect(x_pos + offset1, y_pos , scale, scale, color);
-       this->display->fillRect(x_pos + offset1, y_pos - offset1, scale, scale, color);
+       this->drawLargerBlock(x_pos, y_pos, scale, color);
+       this->drawLargerBlock(x_pos + offset1, y_pos , scale, color);
+       this->drawLargerBlock(x_pos + offset1, y_pos - offset1, scale, color);
      }
    }
 }
