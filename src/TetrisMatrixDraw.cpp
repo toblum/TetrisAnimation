@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
 TetrisMatrixDraw::TetrisMatrixDraw(Adafruit_GFX &display)	{
     this->display = &display;
-    intialiseColors();
     resetNumStates();
 }
 
@@ -741,28 +740,6 @@ void TetrisMatrixDraw::drawColon(int x, int y, uint16_t colonColour){
   int xColonPos = x + (TETRIS_DISTANCE_BETWEEN_DIGITS * 2 * this->scale);  
   display->fillRect(xColonPos, y + (12 * this->scale), colonSize, colonSize, colonColour);
   display->fillRect(xColonPos, y + (8 * this->scale), colonSize, colonSize, colonColour);
-}
-
-void TetrisMatrixDraw::intialiseColors(){
-    this->tetrisRED = 0xF800;
-    this->tetrisGREEN = 0x07E0;
-    this->tetrisBLUE = 0x325F;
-    this->tetrisWHITE = 0xFFFF;
-    this->tetrisYELLOW = 0xFFE0;
-    this->tetrisCYAN = 0x07FF;
-    this->tetrisMAGENTA = 0xF81F;
-    this->tetrisORANGE = 0xFB00;
-    this->tetrisBLACK = 0x0000;
-    
-    this->tetrisColors[0] = this->tetrisRED; 
-    this->tetrisColors[1] = this->tetrisGREEN; 
-    this->tetrisColors[2] = this->tetrisBLUE; 
-    this->tetrisColors[3] = this->tetrisWHITE; 
-    this->tetrisColors[4] = this->tetrisYELLOW; 
-    this->tetrisColors[5] = this->tetrisCYAN; 
-    this->tetrisColors[6] = this->tetrisMAGENTA;
-    this->tetrisColors[7] = this->tetrisORANGE; 
-    this->tetrisColors[8] = this->tetrisBLACK;
 }
 
 int TetrisMatrixDraw::calculateWidth(){
