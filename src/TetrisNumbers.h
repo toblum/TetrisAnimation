@@ -12,7 +12,7 @@ typedef struct
   int num_rot;    // Number of 90-degree (clockwise) rotations a brick is turned from the standard position
 } fall_instr;
 
-int xShiftClock[4] = {0, 7, 17, 24};
+static const int xShiftClock[4] = {0, 7, 17, 24};
 
 // *********************************************************************
 // Fall instructions for all numbers
@@ -22,7 +22,7 @@ int xShiftClock[4] = {0, 7, 17, 24};
 // Number 0
 // *********************************************************************
 #define SIZE_NUM_0 12
-fall_instr num_0[SIZE_NUM_0] = {
+static const fall_instr num_0[SIZE_NUM_0] = {
     {2, 5, 4, 16, 0},
     {4, 7, 2, 16, 1},
     {3, 4, 0, 16, 1},
@@ -40,7 +40,7 @@ fall_instr num_0[SIZE_NUM_0] = {
 // Number 1
 // *********************************************************************
 #define SIZE_NUM_1 5
-fall_instr num_1[SIZE_NUM_1] = {
+static const fall_instr num_1[SIZE_NUM_1] = {
     {2, 5, 4, 16, 0},
     {3, 4, 4, 15, 1},
     {3, 4, 5, 13, 3},
@@ -51,7 +51,7 @@ fall_instr num_1[SIZE_NUM_1] = {
 // Number 2
 // *********************************************************************
 #define SIZE_NUM_2 11
-fall_instr num_2[SIZE_NUM_2] = {
+static const fall_instr num_2[SIZE_NUM_2] = {
     {0, 0, 4, 16, 0},
     {3, 4, 0, 16, 1},
     {1, 2, 1, 16, 3},
@@ -68,7 +68,7 @@ fall_instr num_2[SIZE_NUM_2] = {
 // Number 3
 // *********************************************************************
 #define SIZE_NUM_3 11
-fall_instr num_3[SIZE_NUM_3] = {
+static const fall_instr num_3[SIZE_NUM_3] = {
     {1, 2, 3, 16, 3},
     {2, 5, 0, 16, 1},
     {3, 4, 1, 15, 2},
@@ -85,7 +85,7 @@ fall_instr num_3[SIZE_NUM_3] = {
 // Number 4
 // *********************************************************************
 #define SIZE_NUM_4 9
-fall_instr num_4[SIZE_NUM_4] = {
+static const fall_instr num_4[SIZE_NUM_4] = {
     {0, 0, 4, 16, 0},
     {0, 0, 4, 14, 0},
     {3, 4, 1, 12, 0},
@@ -100,7 +100,7 @@ fall_instr num_4[SIZE_NUM_4] = {
 // Number 5
 // *********************************************************************
 #define SIZE_NUM_5 11
-fall_instr num_5[SIZE_NUM_5] = {
+static const fall_instr num_5[SIZE_NUM_5] = {
     {0, 0, 0, 16, 0},
     {2, 5, 2, 16, 1},
     {2, 5, 3, 15, 0},
@@ -117,7 +117,7 @@ fall_instr num_5[SIZE_NUM_5] = {
 // Number 6
 // *********************************************************************
 #define SIZE_NUM_6 12
-fall_instr num_6[SIZE_NUM_6] = {
+static const fall_instr num_6[SIZE_NUM_6] = {
     {2, 5, 0, 16, 1},
     {5, 1, 2, 16, 1},
     {6, 6, 0, 15, 3},
@@ -135,7 +135,7 @@ fall_instr num_6[SIZE_NUM_6] = {
 // Number 7
 // *********************************************************************
 #define SIZE_NUM_7 7
-fall_instr num_7[SIZE_NUM_7] = {
+static const fall_instr num_7[SIZE_NUM_7] = {
     {0, 0, 4, 16, 0},
     {1, 2, 4, 14, 0},
     {3, 4, 5, 13, 1},
@@ -148,7 +148,7 @@ fall_instr num_7[SIZE_NUM_7] = {
 // Number 8
 // *********************************************************************
 #define SIZE_NUM_8 13
-fall_instr num_8[SIZE_NUM_8] = {
+static const fall_instr num_8[SIZE_NUM_8] = {
     {3, 4, 1, 16, 0},
     {6, 6, 0, 16, 1},
     {3, 4, 5, 16, 1},
@@ -167,7 +167,7 @@ fall_instr num_8[SIZE_NUM_8] = {
 // Number 9
 // *********************************************************************
 #define SIZE_NUM_9 12
-fall_instr num_9[SIZE_NUM_9] = {
+static const fall_instr num_9[SIZE_NUM_9] = {
     {0, 0, 0, 16, 0},
     {3, 4, 2, 16, 0},
     {1, 2, 2, 15, 3},
@@ -181,12 +181,12 @@ fall_instr num_9[SIZE_NUM_9] = {
     {5, 1, 0, 8, 1},
     {6, 6, 2, 8, 2}};
 
-int blocksPerNumber[10] = {SIZE_NUM_0, SIZE_NUM_1, SIZE_NUM_2, SIZE_NUM_3, SIZE_NUM_4, SIZE_NUM_5, SIZE_NUM_6, SIZE_NUM_7, SIZE_NUM_8, SIZE_NUM_9};
+static const int blocksPerNumber[10] = {SIZE_NUM_0, SIZE_NUM_1, SIZE_NUM_2, SIZE_NUM_3, SIZE_NUM_4, SIZE_NUM_5, SIZE_NUM_6, SIZE_NUM_7, SIZE_NUM_8, SIZE_NUM_9};
 
 // *********************************************************************
 // Helper function that that return the falling instruction for a given number
 // *********************************************************************
-fall_instr getFallinstrByNum(int num, int blockindex)
+static const fall_instr getFallinstrByNum(int num, int blockindex)
 {
   if (num == 0)
   {
@@ -224,8 +224,7 @@ fall_instr getFallinstrByNum(int num, int blockindex)
   {
     return num_8[blockindex];
   }
-  if (num == 9)
-  {
-    return num_9[blockindex];
-  }
+
+  // implicit return
+  return num_9[blockindex];
 }

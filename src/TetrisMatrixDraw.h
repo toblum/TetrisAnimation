@@ -25,8 +25,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
 #define TETRIS_MAX_NUMBERS 9
 
+#ifndef TETRIS_DISTANCE_BETWEEN_DIGITS
 #define TETRIS_DISTANCE_BETWEEN_DIGITS 7
+#endif
+
+#ifndef TETRIS_Y_DROP_DEFAULT
 #define TETRIS_Y_DROP_DEFAULT 16
+#endif
 
 // Type that describes the current state of a drawn number
 typedef struct
@@ -58,16 +63,16 @@ class TetrisMatrixDraw
         bool drawOutline = false;
         uint16_t outLineColour = 0x0000;
 
-        uint16_t tetrisColors[9];
-        uint16_t tetrisRED;
-        uint16_t tetrisGREEN;
-        uint16_t tetrisBLUE;
-        uint16_t tetrisWHITE;
-        uint16_t tetrisYELLOW;
-        uint16_t tetrisCYAN;
-        uint16_t tetrisMAGENTA;
-        uint16_t tetrisORANGE;
-        uint16_t tetrisBLACK;
+        static const uint16_t tetrisRED = 0xF800;
+        static const uint16_t tetrisGREEN = 0x07E0;
+        static const uint16_t tetrisBLUE = 0x325F;
+        static const uint16_t tetrisWHITE = 0xFFFF;
+        static const uint16_t tetrisYELLOW = 0xFFE0;
+        static const uint16_t tetrisCYAN = 0x07FF;
+        static const uint16_t tetrisMAGENTA = 0xF81F;
+        static const uint16_t tetrisORANGE = 0xFB00;
+        static const uint16_t tetrisBLACK = 0x0000;
+        uint16_t tetrisColors[9] = {tetrisRED, tetrisGREEN, tetrisBLUE, tetrisWHITE, tetrisYELLOW, tetrisCYAN, tetrisMAGENTA, tetrisORANGE, tetrisBLACK};
 
     private:
         void intialiseColors();
