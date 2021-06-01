@@ -643,13 +643,12 @@ bool TetrisMatrixDraw::drawText(int x, int yFinish)
   return finishedAnimating;
 }
 
-bool TetrisMatrixDraw::drawNumbers(int x, int yFinish, bool displayColon)
+bool TetrisMatrixDraw::drawNumbers(int x, int yFinish, bool displayColon, int yDropDistance)
 {
   // For each number position
   bool finishedAnimating = true;
-
   int scaledYOffset = (this->scale > 1) ? this->scale : 1;
-  int y = yFinish - (TETRIS_Y_DROP_DEFAULT * this->scale);
+  int y = yFinish - (yDropDistance * this->scale);
 
   for (int numpos = 0; numpos < this->sizeOfValue; numpos++)
   {
@@ -665,33 +664,33 @@ bool TetrisMatrixDraw::drawNumbers(int x, int yFinish, bool displayColon)
         uint8_t rotations = current_fall.num_rot;
         if (rotations == 1)
         {
-          if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 2))
+          if (numstates[numpos].fallindex < (int)(((yDropDistance - current_fall.y_stop_offset)) / 2))
           {
             rotations = 0;
           }
         }
         if (rotations == 2)
         {
-          if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 3))
+          if (numstates[numpos].fallindex < (int)((yDropDistance - current_fall.y_stop_offset) / 3))
           {
             rotations = 0;
           }
-          if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 3 * 2))
+          if (numstates[numpos].fallindex < (int)((yDropDistance - current_fall.y_stop_offset) / 3 * 2))
           {
             rotations = 1;
           }
         }
         if (rotations == 3)
         {
-          if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 4))
+          if (numstates[numpos].fallindex < (int)((yDropDistance - current_fall.y_stop_offset) / 4))
           {
             rotations = 0;
           }
-          if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 4 * 2))
+          if (numstates[numpos].fallindex < (int)((yDropDistance - current_fall.y_stop_offset) / 4 * 2))
           {
             rotations = 1;
           }
-          if (numstates[numpos].fallindex < (int)(current_fall.y_stop / 4 * 3))
+          if (numstates[numpos].fallindex < (int)((yDropDistance - current_fall.y_stop_offset) / 4 * 3))
           {
             rotations = 2;
           }
@@ -713,7 +712,7 @@ bool TetrisMatrixDraw::drawNumbers(int x, int yFinish, bool displayColon)
         }
         numstates[numpos].fallindex++;
 
-        if (numstates[numpos].fallindex > current_fall.y_stop)
+        if (numstates[numpos].fallindex > (yDropDistance - current_fall.y_stop_offset))
         {
           numstates[numpos].fallindex = 0;
           numstates[numpos].blockindex++;
@@ -730,14 +729,14 @@ bool TetrisMatrixDraw::drawNumbers(int x, int yFinish, bool displayColon)
             drawShape(fallen_block.blocktype, 
                       this->tetrisColors[fallen_block.color], 
                       x + fallen_block.x_pos + numstates[numpos].x_shift, 
-                      y + fallen_block.y_stop - 1, 
+                      y + (yDropDistance - fallen_block.y_stop_offset) - 1, 
                       fallen_block.num_rot);
           } else {
             drawLargerShape(this->scale, 
                             fallen_block.blocktype, 
                             this->tetrisColors[fallen_block.color], 
                             x + (fallen_block.x_pos * this->scale) + numstates[numpos].x_shift, 
-                            y + (fallen_block.y_stop * scaledYOffset) - scaledYOffset, 
+                            y + ((yDropDistance - fallen_block.y_stop_offset) * scaledYOffset) - scaledYOffset, 
                             fallen_block.num_rot);
           }
         }
