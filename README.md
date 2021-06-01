@@ -69,7 +69,7 @@ These will normally be called in a timer or ticker (see any example). How often 
 
 ```
 
-// Usage: `drawNumbers(x, y, showColon, dropDistance)` (for use with setTime or setNumber)
+// Usage: drawNumbers(x, y, showColon, dropDistance) (for use with setTime or setNumber)
 // x = most left Pixel of the text
 // y = The bottom of the number when it lands, they will start falling from y + (16 * scale)
 // showColon = (optional) show the colon or not, defaults to false (only applicable when using setTime)
@@ -79,7 +79,7 @@ These will normally be called in a timer or ticker (see any example). How often 
 // (will return false if there is still falling blocks)
 tetris.drawNumbers(16,8, true);
 
-// Usage: `drawText(x, y, dropDistance)` (for use with setText)
+// Usage: drawText(x, y, dropDistance) (for use with setText)
 // x = most left Pixel of the text
 // y = The bottom of the text when it lands, they will start falling from y + (16 * scale)
 // dropDistance = (optional - defaults to 16 (but scaled)) change the height above y the blocks start from. It's multiplied by the font scale
