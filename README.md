@@ -7,6 +7,7 @@ An Arduino library for drawing letters and numbers using a falling block style a
 Deisgined orginally for RGB LED Matrixes, but it should in theory work with any display that uses the Adafruit GFX library.
 
 ### Displays/Libraries tested ( Examples included)
+
 - RGB LED Matrix using the [PxMatrix library](https://github.com/2dom/PxMatrix/) - ESP8266 and ESP32
 - VGA Display using the [Bitluni ESP32Lib](https://github.com/bitluni/ESP32Lib) - ESP32
 - Nokia 5110 Screen using a modified [Adafruit PCD8544 library](https://github.com/bbx10/Adafruit-PCD8544-Nokia-5110-LCD-library/tree/esp8266) - ESP8266
@@ -39,7 +40,7 @@ Set the value of the library by using one of: setTime, setNumbers or setText com
 // forceRefresh: by default, a digit will only redraw if it's value has changed
 //               (so for a clock the hour digit would only draw once an hour)
 //               but setting this value to true tells the library to redraw
-//               all the digits.  
+//               all the digits.
 tetris.setTime("12:34");
 
 // Usage: setNumbers(num, forceRefresh = false)
@@ -47,7 +48,7 @@ tetris.setTime("12:34");
 // forceRefresh: by default, a digit will only redraw if it's value has changed
 //               (so for a clock the hour digit would only draw once an hour)
 //               but setting this value to true tells the library to redraw
-//               all the digits.  
+//               all the digits.
 tetris.setNumbers(1234);
 
 // Usage: setText(string, forceRefresh = false)
@@ -68,18 +69,20 @@ These will normally be called in a timer or ticker (see any example). How often 
 
 ```
 
-// Usage: drawNumbers(x, y, showColon) (for use with setTime or setNumber)
-// x = most left Pixel of the text 
+// Usage: `drawNumbers(x, y, showColon, dropDistance)` (for use with setTime or setNumber)
+// x = most left Pixel of the text
 // y = The bottom of the number when it lands, they will start falling from y + (16 * scale)
-// showColon = (optional) show the colon or not, defaults to false (only applicaple when using setTime)
+// showColon = (optional) show the colon or not, defaults to false (only applicable when using setTime)
+// dropDistance = (optional - defaults to 16 (but scaled)) change the height above y the blocks start from. It's multiplied by the font scale
 //
 // Returns a boolean to indicate if its finished animating
 // (will return false if there is still falling blocks)
 tetris.drawNumbers(16,8, true);
 
-// Usage: drawText(x, y) (for use with setText)
-// x = most left Pixel of the text 
+// Usage: `drawText(x, y, dropDistance)` (for use with setText)
+// x = most left Pixel of the text
 // y = The bottom of the text when it lands, they will start falling from y + (16 * scale)
+// dropDistance = (optional - defaults to 16 (but scaled)) change the height above y the blocks start from. It's multiplied by the font scale
 //
 // Returns a boolean to indicate if its finished animating
 // (will return false if there is still falling blocks)
@@ -92,7 +95,7 @@ tetris.drawText(16,8);
 ```
 // Usage: scale = 2
 // Will scale up the size of the characters
-// Can be used with either numbers or text 
+// Can be used with either numbers or text
 
 tetris.scale = 2; // must be called before setText, setTime or setNumbers
 tetris.setText("BIG"); // This will be twice the size as normal
