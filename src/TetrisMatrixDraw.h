@@ -48,7 +48,7 @@ class TetrisMatrixDraw
         TetrisMatrixDraw (Adafruit_GFX  &display);
         Adafruit_GFX  *display;
         bool drawNumbers(int x = 0, int y = 0, bool displayColon = false, int yDropDistance = TETRIS_Y_DROP_DEFAULT);
-        bool drawText(int x = 0, int y = 0);
+        bool drawText(int x = 0, int y = 0, int yDropDistance = TETRIS_Y_DROP_DEFAULT);
         void drawChar(String letter, uint8_t x, uint8_t y, uint16_t color);
         void drawShape(int blocktype, uint16_t color, int x_pos, int y_pos, int num_rot);
         void drawLargerShape(int scale, int blocktype, uint16_t color, int x_pos, int y_pos, int num_rot);
