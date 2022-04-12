@@ -21,7 +21,32 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 #define TetrisMatrixDraw_h
 
 #include <Arduino.h>
-#include "Adafruit_GFX.h"
+
+#if __has_include(<TFT_eSPI.h>) // pros: wide support, cons: needs a setup
+  #include <TFT_eSPI.h> // https://github.com/Bodmer/TFT_eSPI
+  #define Tetris_GFX TFT_eSprite
+
+#elif __has_include(<LovyanGFX.h>) // pros: has autodetect, cons: no AVR support
+  #define LGFX_AUTODETECT
+  #define LGFX_USE_V1
+  #include <LovyanGFX.h> // https://github.com/lovyan03/LovyanGFX
+  #define Tetris_GFX LGFX_Sprite
+
+#elif __has_include(<M5GFX.h>) // pros: handles every M5Stack devices, cons: no AVR support
+  #include <M5GFX.h> // https://github.com/m5stack/M5GFX
+  #define Tetris_GFX LGFX_Sprite
+
+#elif __has_include(<Arduino_GFX.h>) // pros: very customizable
+  #include <Arduino_GFX.h> // https://github.com/moononournation/Arduino_GFX
+  #define Tetris_GFX Arduino_Canvas
+
+#else
+  // pros: very educational, cons: has many library dependencies
+  #include <Adafruit_GFX.h> // https://github.com/adafruit/Adafruit_GFX
+  #define Tetris_GFX Adafruit_GFX
+
+#endif
+
 
 #define TETRIS_MAX_NUMBERS 9
 
@@ -45,8 +70,8 @@ typedef struct
 class TetrisMatrixDraw
 {
     public:
-        TetrisMatrixDraw (Adafruit_GFX  &display);
-        Adafruit_GFX  *display;
+        TetrisMatrixDraw (Tetris_GFX &display);
+        Tetris_GFX  *display;
         bool drawNumbers(int x = 0, int y = 0, bool displayColon = false);
         bool drawText(int x = 0, int y = 0);
         void drawChar(String letter, uint8_t x, uint8_t y, uint16_t color);
