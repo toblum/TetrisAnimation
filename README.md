@@ -1,4 +1,5 @@
 # TetrisAnimation
+[![Compile Examples](https://github.com/toblum/TetrisAnimation/workflows/Compile%20Examples/badge.svg)](https://github.com/toblum/TetrisAnimation/actions?workflow=Compile+Examples)
 
 An Arduino library for drawing letters and numbers using a falling block style animation.
 
