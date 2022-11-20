@@ -92,6 +92,9 @@ jobs:
           platforms: ${{ matrix.board.platforms }}
           enable-deltas-report: true
           sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}
+          libraries: |
+            - name: Adafruit GFX Library
+            - name: PxMatrix LED MATRIX library
 
       - name: Save memory usage change report as artifact
         if: github.event_name == 'pull_request'
