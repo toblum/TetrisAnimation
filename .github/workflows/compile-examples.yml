@@ -6,11 +6,13 @@ on:
       - ".github/workflows/compile-examples.yml"
       - "examples/**"
       - "src/**"
+      - "library.properties"
   push:
     paths:
       - ".github/workflows/compile-examples.yml"
       - "examples/**"
       - "src/**"
+      - "library.properties"
 
 jobs:
   build:
