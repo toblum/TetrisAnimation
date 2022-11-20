@@ -26,56 +26,60 @@ jobs:
 
       matrix:
         board:
-          - fqbn: arduino:samd:mkr1000
-            platforms: |
-              - name: arduino:samd
-          - fqbn: arduino:samd:mkrzero
-            platforms: |
-              - name: arduino:samd
-          - fqbn: arduino:samd:mkrwifi1010
-            platforms: |
-              - name: arduino:samd
-          - fqbn: arduino:samd:mkrfox1200
-            platforms: |
-              - name: arduino:samd
-          - fqbn: arduino:samd:mkrwan1300
-            platforms: |
-              - name: arduino:samd
-          - fqbn: arduino:samd:mkrwan1310
-            platforms: |
-              - name: arduino:samd
-          - fqbn: arduino:samd:mkrgsm1400
-            platforms: |
-              - name: arduino:samd
-          - fqbn: arduino:samd:mkrnb1500
-            platforms: |
-              - name: arduino:samd
-          - fqbn: arduino:samd:mkrvidor4000
-            platforms: |
-              - name: arduino:samd
-          - fqbn: arduino:mbed_portenta:envie_m7
-            platforms: |
-              - name: arduino:mbed_portenta
-          - fqbn: arduino:mbed_portenta:envie_m4
-            platforms: |
-              - name: arduino:mbed_portenta
-          - fqbn: arduino:mbed_nano:nano33ble
-            platforms: |
-              - name: arduino:mbed_nano
-          - fqbn: arduino:mbed_nano:nanorp2040connect
-            platforms: |
-              - name: arduino:mbed_nano
-          - fqbn: arduino:mbed_edge:edge_control
-            platforms: |
-              - name: arduino:mbed_edge
+#           - fqbn: arduino:samd:mkr1000
+#             platforms: |
+#               - name: arduino:samd
+#           - fqbn: arduino:samd:mkrzero
+#             platforms: |
+#               - name: arduino:samd
+#           - fqbn: arduino:samd:mkrwifi1010
+#             platforms: |
+#               - name: arduino:samd
+#           - fqbn: arduino:samd:mkrfox1200
+#             platforms: |
+#               - name: arduino:samd
+#           - fqbn: arduino:samd:mkrwan1300
+#             platforms: |
+#               - name: arduino:samd
+#           - fqbn: arduino:samd:mkrwan1310
+#             platforms: |
+#               - name: arduino:samd
+#           - fqbn: arduino:samd:mkrgsm1400
+#             platforms: |
+#               - name: arduino:samd
+#           - fqbn: arduino:samd:mkrnb1500
+#             platforms: |
+#               - name: arduino:samd
+#           - fqbn: arduino:samd:mkrvidor4000
+#             platforms: |
+#               - name: arduino:samd
+#           - fqbn: arduino:mbed_portenta:envie_m7
+#             platforms: |
+#               - name: arduino:mbed_portenta
+#           - fqbn: arduino:mbed_portenta:envie_m4
+#             platforms: |
+#               - name: arduino:mbed_portenta
+#           - fqbn: arduino:mbed_nano:nano33ble
+#             platforms: |
+#               - name: arduino:mbed_nano
+#           - fqbn: arduino:mbed_nano:nanorp2040connect
+#             platforms: |
+#               - name: arduino:mbed_nano
+#           - fqbn: arduino:mbed_edge:edge_control
+#             platforms: |
+#               - name: arduino:mbed_edge
           - fqbn: esp32:esp32:esp32
             platforms: |
               - name: esp32:esp32
                 source-url: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
-          - fqbn: rp2040:rp2040:rpipico
+          - fqbn: esp8266:esp8266:esp8266
             platforms: |
-              - name: rp2040:rp2040
-                source-url: https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
+              - name: esp8266:esp8266
+                source-url: http://arduino.esp8266.com/stable/package_esp8266com_index.json
+#           - fqbn: rp2040:rp2040:rpipico
+#             platforms: |
+#               - name: rp2040:rp2040
+#                 source-url: https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
 
     steps:
       - name: Checkout
@@ -95,6 +99,7 @@ jobs:
           libraries: |
             - name: Adafruit GFX Library
             - name: PxMatrix LED MATRIX library
+            - name: NtpClientLib
             - source-path: ./src
 
       - name: Save memory usage change report as artifact
