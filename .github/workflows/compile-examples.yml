@@ -95,6 +95,7 @@ jobs:
           libraries: |
             - name: Adafruit GFX Library
             - name: PxMatrix LED MATRIX library
+            - source-path: ./src
 
       - name: Save memory usage change report as artifact
         if: github.event_name == 'pull_request'
