@@ -20,6 +20,13 @@ jobs:
 
     env:
       SKETCHES_REPORTS_PATH: sketches-reports
+      LIBRARIES: |
+        # Install the library from the local path.
+        - source-path: ./
+        - name: Adafruit GFX Library
+        - name: PxMatrix LED MATRIX library
+        - name: Time
+        - name: NtpClientLib
 
     strategy:
       fail-fast: false
@@ -53,12 +60,6 @@ jobs:
           platforms: ${{ matrix.board.platforms }}
           enable-deltas-report: true
           sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}
-          libraries: |
-            - name: Adafruit GFX Library
-            - name: PxMatrix LED MATRIX library
-            - name: Time
-            - name: NtpClientLib
-            - source-path: ./src
 
       - name: Save memory usage change report as artifact
         if: github.event_name == 'pull_request'
