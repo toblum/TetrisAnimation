@@ -49,6 +49,9 @@ jobs:
       - name: Compile examples
         uses: arduino/compile-sketches@v1
         with:
+          cli-compile-flags: |
+            - --warnings
+            - default
           fqbn: ${{ matrix.board.fqbn }}
           platforms: ${{ matrix.board.platforms }}
           libraries: ${{ env.LIBRARIES }}
