@@ -33,17 +33,10 @@ jobs:
 
       matrix:
         board:
-          - fqbn: arduino:avr:uno
-            platforms: |
-              - name: arduino:avr
           - fqbn: esp32:esp32:esp32
             platforms: |
               - name: esp32:esp32
                 source-url: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
-          - fqbn: esp8266:esp8266:huzzah
-            platforms: |
-              - name: esp8266:esp8266
-                source-url: http://arduino.esp8266.com/stable/package_esp8266com_index.json
 
     steps:
       - name: Checkout
